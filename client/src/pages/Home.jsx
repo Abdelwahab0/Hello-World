@@ -10,7 +10,6 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 function Home() {
   const { data, loading, error } = useQuery(FETCH_POSTS_QUERY);
   if(data) {
-    console.log(data);
     var { getPosts: posts } = data;
   }
   if(error) {
