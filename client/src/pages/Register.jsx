@@ -18,16 +18,22 @@ export default function Register({history}) {
   });
 
 
-  const [addUser, {loading}] = useMutation(REGISTER_USER, {
-    update(proxy, {data: {login: userData}}){
+  const [addUser, { loading }] = useMutation(REGISTER_USER, {
+    update(
+      _,
+      {
+        data: { register: userData }
+      }
+    ) {
       context.login(userData);
       history.push('/');
     },
-    onError(err){
-      setErrors(err.graphQLErrors[0].extensions.exception.errors);    
+    onError(err) {
+      setErrors(err.graphQLErrors[0].extensions.exception.errors);
     },
     variables: values
-  });
+  })
+
   function registerUser(){
     addUser();
   }
@@ -99,13 +105,17 @@ const REGISTER_USER = gql`
   ) {
     register(
       registerInput: {
-        username: $username,
-        email: $email,
-        password: $password,
-        confirmPassword: $confirmPassword,
+        username: $username
+        email: $email
+        password: $password
+        confirmPassword: $confirmPassword
       }
-    ){
-      id email username createdAt token
+    ) {
+      id
+      email
+      username
+      createdAt
+      token
     }
   }
 `;
